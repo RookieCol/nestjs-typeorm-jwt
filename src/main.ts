@@ -1,13 +1,34 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as morgan from 'morgan';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { SwaggerModule } from '@nestjs/swagger';
+import { swaggerConfig } from './config/swagger/swaggerConfig';
+import * as morgan from 'morgan';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.use(morgan('combined'));
-  const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
-  await app.listen(port);
+  try {
+    const app = await NestFactory.create(AppModule);
+
+    // Morgan middleware for logging HTTP requests
+    app.use(morgan('combined'));
+
+    // Retrieve configuration service
+    const configService = app.get(ConfigService);
+    const port = configService.get('PORT') || 3000;
+
+    // Global API prefix
+    app.setGlobalPrefix('api/v1');
+
+    // Swagger configuration
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup('docs', app, document);
+
+    // Start the application
+    await app.listen(port);
+    console.log(`Application is running on: ${await app.getUrl()}`);
+  } catch (error) {
+    console.error('Error during NestJS application startup', error);
+  }
 }
+
 bootstrap();

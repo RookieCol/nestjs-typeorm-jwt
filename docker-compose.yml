@@ -14,8 +14,7 @@ services:
       - ./.env.develop
     volumes:
       - .:/app
-      - /app/node_modules
-    command: pnpm start:dev
+    command: pnpm start:dev --preserveWatchOutput
   
   postgres-db:
     image: postgres:13
