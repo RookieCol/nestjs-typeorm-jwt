@@ -11,7 +11,12 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     //Class-validator middleware for validating incoming request payloads 
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe(
+      {
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }
+    ));
 
 
     // Morgan middleware for logging HTTP requests
