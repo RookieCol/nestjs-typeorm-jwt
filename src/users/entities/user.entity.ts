@@ -6,16 +6,16 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true,})
+  @Column({ unique: true })
   username: string;
 
   @Column()
   email: string;
 
-  @Column({ default: '' ,nullable:true})
+  @Column({ default: '', nullable: true })
   bio: string;
 
-  @Column({ default: '' ,nullable:true})
+  @Column({ default: '', nullable: true })
   image: string;
 
   @Column()

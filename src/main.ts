@@ -3,21 +3,20 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 import { swaggerConfig } from './config/swagger/swaggerConfig';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
 
-    //Class-validator middleware for validating incoming request payloads 
-    app.useGlobalPipes(new ValidationPipe(
-      {
+    //Class-validator middleware for validating incoming request payloads
+    app.useGlobalPipes(
+      new ValidationPipe({
         whitelist: true,
         forbidNonWhitelisted: true,
-      }
-    ));
-
+      }),
+    );
 
     // Morgan middleware for logging HTTP requests
     app.use(morgan('combined'));

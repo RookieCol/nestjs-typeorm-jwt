@@ -8,10 +8,10 @@ import { UsersModule } from './users/users.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env.develop',
-      isGlobal: true
+      isGlobal: true,
     }),
     DatabaseModule,
-    UsersModule
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [],

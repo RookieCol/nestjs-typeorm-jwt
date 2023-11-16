@@ -7,18 +7,17 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ){}
+  ) {}
 
   create(createUserDto: CreateUserDto) {
     return this.userRepository.save(createUserDto);
   }
 
   findOne(id: number) {
-    return this.userRepository.findOneBy({id});
+    return this.userRepository.findOneBy({ id });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
